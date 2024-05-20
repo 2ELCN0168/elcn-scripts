@@ -46,7 +46,7 @@ LVM_deletion() {
 
     # FORMATTING DONE
     while true; do
-        read -p "Do you want to try automatic LVM deletion ? [y/N] -> " response
+        read -p "Do you want to try automatic LVM deletion? It will also try to close a LUKS volume. [y/N] -> " response
         response="${response:-N}"
         case "$response" in
             [nN])
