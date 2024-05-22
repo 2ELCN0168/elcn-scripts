@@ -10,6 +10,9 @@ export C_WHITE="\033[97m"
 # End of the color sequence
 export NO_FORMAT="\033[0m"
 
-### LOGS
+### MESSAGE TYPES
 
-export LOG_FILE="./lib/l_journal.log"
+export INFO="${C_WHITE}[${C_CYAN}INFO${C_WHITE}]${NO_FORMAT}"
+export WARN="${C_WHITE}[${C_YELLOW}WARNING${C_WHITE}]${NO_FORMAT}"
+export ERR="${C_WHITE}[${C_RED}ERROR${C_WHITE}]${NO_FORMAT}"
+export SUC="${C_WHITE}[${C_GREEN}SUCCESS${C_WHITE}]${NO_FORMAT}"

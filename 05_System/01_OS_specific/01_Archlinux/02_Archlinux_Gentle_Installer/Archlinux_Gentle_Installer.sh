@@ -1,15 +1,27 @@
 #! /bin/bash
 
-local f_path="./functions"
+source_files() {
 
-source ./c_config.sh
-source ./functions/f_formatting.sh
-source ./functions/f_logs.sh
-source ./functions/f_run_command.sh
+    local f_path="./functions"
 
-source ./functions/f_greetings.sh
-source ./functions/f_internet.sh
-source ./functions/f_lvm_luks_deletion.sh
+    source ./c_config.sh
+    source $f_path/f_formatting.sh
+
+    source $f_path/f_greetings.sh
+    source $f_path/f_internet.sh
+    source $f_path/f_lvm_luks_deletion.sh
+    source $f_path/f_bios_mode.sh
+    source $f_path/f_bootloader_choice.sh
+    source $f_path/f_luks_choice.sh
+    source $f_path/f_cpu_manufacturer.sh
+    source $f_path/f_filesystem.sh
+    source $f_path/f_disk_choice.sh
+    source $f_path/f_partition_disks.sh
+    source $f_path/f_format_choice.sh
+}
+
+# SOURCE FILES
+source_files
 
 # INIT
 greetings
@@ -20,3 +32,31 @@ test_internet
 # ASK FOR LVM AND LUKS DESTRUCTION
 lvm_luks_try
 
+# TEST UEFI/BIOS MODE
+get_bios_mode
+
+# ASK FOR BOOTLOADER
+bootloader_choice
+
+# ASK FOR LUKS
+luks_choice
+
+# DETECT CPU MANUFACTURER
+get_cpu_brand
+
+# ASK FOR FILESYSTEM
+filesystem_choice
+
+# ASK FOR BLOCK DEVICE
+disk_choice
+
+# INIT PARTITIONING
+partition_disk
+
+# START FORMATING PARTITIONS BTRFS|XFS|EXT4 WITH(OUT) LUKS
+format_partitions
+
+#
+#
+#
+# f_format_choice, needs to continue multiple handles for filesystems.

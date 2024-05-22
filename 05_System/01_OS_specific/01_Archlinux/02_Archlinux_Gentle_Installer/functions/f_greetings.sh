@@ -5,7 +5,7 @@
 # ---
 
 greetings() {
-  clear
+  #clear
   printf "\n${C_CYAN}███${C_RED}█${C_CYAN}█${C_YELLOW}█${C_CYAN}█${NO_FORMAT}"
   jump
 
