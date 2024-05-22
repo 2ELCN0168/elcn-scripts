@@ -864,7 +864,7 @@ clear
 
 echo -e "\n${C_CYAN}███${C_RED}█${C_CYAN}█${C_YELLOW}█${C_CYAN}█\n${NO_FORMAT}"
 date
-echo -e "\n${C_CYAN}> ${C_WHITE}Welcome to this gently automated ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. ${C_CYAN}<\n${NO_FORMAT}"
+echo -e "\n${C_CYAN}> ${C_WHITE}Welcome to this classical automated ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. ${C_CYAN}<\n${NO_FORMAT}"
 
 echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have ${C_RED}any LVM ${C_PINK}configured on your disk, or it will ${C_RED}mess up${C_PINK} the script. You must delete any LV, VG and PV before starting.\n${NO_FORMAT}"
 # Making sure nothing is mounted there before initializing.
