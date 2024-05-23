@@ -14,10 +14,13 @@ source_files() {
     source $f_path/f_bootloader_choice.sh
     source $f_path/f_luks_choice.sh
     source $f_path/f_cpu_manufacturer.sh
+    source $f_path/f_lvm_handling.sh
+    source $f_path/f_mount_default.sh
     source $f_path/f_filesystem.sh
     source $f_path/f_disk_choice.sh
     source $f_path/f_partition_disks.sh
     source $f_path/f_format_choice.sh
+    source $f_path/f_pacstrap.sh
 }
 
 # SOURCE FILES
@@ -56,7 +59,5 @@ partition_disk
 # START FORMATING PARTITIONS BTRFS|XFS|EXT4 WITH(OUT) LUKS
 format_partitions
 
-#
-#
-#
-# f_format_choice, needs to continue multiple handles for filesystems.
+# INSTALL THE SYSTEM
+pacstrap_install

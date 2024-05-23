@@ -18,4 +18,6 @@ greetings() {
 
   # This unmounting action ensure to have nothing actually mounted on /mnt before starting
   umount -R /mnt &> /dev/null
+
+  cp -a ../c_config.sh ../post_install/c_config.sh
 }

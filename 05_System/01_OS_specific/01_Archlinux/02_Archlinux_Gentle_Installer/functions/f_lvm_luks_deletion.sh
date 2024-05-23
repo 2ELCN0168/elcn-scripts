@@ -44,10 +44,12 @@ lvm_deletion() {
         vgremove -f -y VG_Archlinux &> /dev/null
         pvremove -f -y $(pvscan | head -1 | awk '{ print $2 }') &> /dev/null
         printf "${C_WHITE}> ${SUC} ${C_PINK} LVM deleted.${NO_FORMAT}"
+        jump
         break
         ;;
       [nN])
         printf "${C_WHITE}> ${WARN} ${C_PINK} No LVM will be deleted.${NO_FORMAT}"
+        jump
         break
         ;;
       *)

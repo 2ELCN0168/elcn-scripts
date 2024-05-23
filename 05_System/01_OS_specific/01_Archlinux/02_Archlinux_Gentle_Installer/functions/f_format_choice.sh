@@ -25,18 +25,15 @@ format_partitions() {
     luks_handling
   fi
 
-#  case "$filesystem" in
-#    BTRFS)
-#      BTRFS_handling
-#      ;;
-#    XFS)
-#      XFS_handling
-#      ;;
-#    EXT4)
-#      EXT4_handling
-#      ;;
-#    *)
-#      exit 1
-#      ;;
-#  esac
+  case "$filesystem" in
+    BTRFS)
+      btrfs_handling
+      ;;
+    XFS|EXT4)
+      fs_handling
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
 }
