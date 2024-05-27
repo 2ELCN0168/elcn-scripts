@@ -105,8 +105,8 @@ btrfs_handling() {
     printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to /mnt/var\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var ${root_part} /mnt/var
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}.snapshots${NO_FORMAT} to /mnt/var/snapshots\n"
-    mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=.snapshots ${root_part} /mnt/var/.snapshots
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}.snapshots${NO_FORMAT} to /mnt/.snapshots\n"
+    mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=.snapshots ${root_part} /mnt/.snapshots
 
     printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to /mnt/boot\n"
     mount --mkdir ${boot_part} /mnt/boot

@@ -21,6 +21,7 @@ source_files() {
     source $f_path/f_partition_disks.sh
     source $f_path/f_format_choice.sh
     source $f_path/f_pacstrap.sh
+    source $f_path/f_genfstab.sh
 }
 
 # SOURCE FILES
@@ -61,3 +62,12 @@ format_partitions
 
 # INSTALL THE SYSTEM
 pacstrap_install
+
+# GENERATE FSTAB
+gen_fstab
+
+cp -a c_config.sh post_install
+cp -a functions/f_formatting.sh post_install/functions
+cp -a post_install /mnt
+chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
+arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh

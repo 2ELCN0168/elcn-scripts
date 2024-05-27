@@ -41,7 +41,9 @@ pacstrap_install() {
   sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
   
   # Display additional packages
-  printf "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
+  jump
+  printf "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}"
+  jump
   sleep 4
   
   # Perform the installation of the customized system
