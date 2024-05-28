@@ -5,7 +5,7 @@
 
 luks_choice() {
 
-  export want_encrypted=0
+  export wantEncrypted=0
 
   # FORMATTING DONE
   while true; do
@@ -16,14 +16,14 @@ luks_choice() {
         printf "\n"
         printf "${C_WHITE}> ${INFO} ${C_GREEN}cryptsetup${NO_FORMAT} will be installed."
         jump
-        want_encrypted=1
+        wantEncrypted=1
         break
         ;;
       [nN])
         printf "\n"
         printf "${C_WHITE}> ${INFO} ${C_RED}cryptsetup${NO_FORMAT} won't be installed."
         jump
-        want_encrypted=0
+        wantEncrypted=0
         break
         ;;
       *)

@@ -38,6 +38,7 @@ lvm_deletion() {
   while true; do
     read -p "[?] - Do you want to wipe any present LVM? [Y/n] " response
     local response="${response:-Y}"
+    jump
     case "$response" in
       [yY])
         lvremove -f -y /dev/mapper/VG_Archlinux-* &> /dev/null
@@ -64,6 +65,7 @@ luks_deletion() {
   while true; do
     read -p "[?] - Do you want to close any present LUKS partition? [Y/n] " response
     local response="${response:-Y}"
+    printf "\n"
     case "$response" in
       [yY])
         cryptsetup close root &> /dev/null
@@ -79,4 +81,5 @@ luks_deletion() {
         ;;
     esac
   done
+  jump
 }

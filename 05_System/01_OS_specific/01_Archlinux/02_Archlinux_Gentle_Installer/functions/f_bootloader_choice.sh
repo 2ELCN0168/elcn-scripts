@@ -7,6 +7,9 @@
   bootloader_choice() {
 
   # FORMATTING DONE
+
+  export bootloader=""
+  
   if [[ UEFI -eq 1 ]]; then
     while true; do
       printf "====================\n"

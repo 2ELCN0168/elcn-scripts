@@ -48,8 +48,7 @@ pacstrap_install() {
   
   # Perform the installation of the customized system
   pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-  btop htop bmon nmon nload nethogs jnettop iptraf-ng tcpdump nmap bind-tools hdparm vim man{,-{db,pages}} dos2unix tree texinfo tealdeer fastfetch networkmanager tmux ${additionalPackages}
+  systemctl-tui btop htop bmon nmon nload nethogs jnettop iptraf-ng tcpdump nmap bind-tools hdparm vim man{,-{db,pages}} dos2unix tree texinfo tealdeer fastfetch networkmanager tmux ${additionalPackages}
   jump
   printf "${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${C_GREEN}Vim${NO_FORMAT}."
-  jump
 }

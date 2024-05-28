@@ -48,7 +48,7 @@ btrfs_handling() {
 
   # FORMATTING DONE
 
-  btrfsSubvols=0
+  export btrfsSubvols=0
 
   while true; do
     read -p "[?] - It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? [0=default/1] -> " response
@@ -80,35 +80,35 @@ btrfs_handling() {
     mount ${root_part} /mnt &> /dev/null
     btrfs subvolume create /mnt/{@,@home,@usr,@tmp,@var,.snapshots} &> /dev/null
 
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}@${NO_FORMAT}\n"
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}@home${NO_FORMAT}\n"
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}@usr${NO_FORMAT}\n"
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}@tmp${NO_FORMAT}\n"
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}@var${NO_FORMAT}\n"
-    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} subvolume ${C_GREEN}.snapshots${NO_FORMAT}"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@${NO_FORMAT}\n"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@home${NO_FORMAT}\n"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@usr${NO_FORMAT}\n"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@tmp${NO_FORMAT}\n"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@var${NO_FORMAT}\n"
+    printf "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}.snapshots${NO_FORMAT}"
     jump
 
     umount -R /mnt &> /dev/null
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to /mnt\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to ${C_WHITE}/mnt${NO_FORMAT}\n"
     mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@ ${root_part} /mnt
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@home${NO_FORMAT} to /mnt/home\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@home${NO_FORMAT} to ${C_WHITE}/mnt/home${NO_FORMAT}\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@home ${root_part} /mnt/home
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@usr${NO_FORMAT} to /mnt/usr\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@usr${NO_FORMAT} to ${C_WHITE}/mnt/usr${NO_FORMAT}\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@usr ${root_part} /mnt/usr
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@tmp${NO_FORMAT} to /mnt/tmp\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@tmp${NO_FORMAT} to ${C_WHITE}/mnt/tmp${NO_FORMAT}\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@tmp ${root_part} /mnt/tmp
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to /mnt/var\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to ${C_WHITE}/mnt/var${NO_FORMAT}\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var ${root_part} /mnt/var
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}.snapshots${NO_FORMAT} to /mnt/.snapshots\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}.snapshots${NO_FORMAT} to ${C_WHITE}/mnt/.snapshots${NO_FORMAT}\n"
     mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=.snapshots ${root_part} /mnt/.snapshots
 
-    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to /mnt/boot\n"
+    printf "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
     mount --mkdir ${boot_part} /mnt/boot
     jump
 

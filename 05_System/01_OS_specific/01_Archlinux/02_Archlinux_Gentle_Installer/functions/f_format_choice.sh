@@ -21,7 +21,7 @@ format_partitions() {
     exit 1
   fi
 
-  if [[ $want_encrypted -eq 1 ]]; then
+  if [[ $wantEncrypted -eq 1 ]]; then
     luks_handling
   fi
 

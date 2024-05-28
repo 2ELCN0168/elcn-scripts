@@ -27,7 +27,7 @@ disk_choice() {
       disk="$response"
       printf "\n"
       printf "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}"
-      jump
+      printf "\n"
 
       if [[ $disk =~ nvme... ]]; then 
       partitionType="p"
