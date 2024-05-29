@@ -11,7 +11,7 @@ __tty_theme() {
     printf "\e]P41e66f5" # blue          rgb(30, 102, 245)   #1e66f5
     printf "\e]P58839ef" # magenta       rgb(136, 57, 239)   #8839ef
     printf "\e]P6179299" # cyan          rgb(23, 146, 153)   #179299
-    printf "\e]P7bcc0cc" # light_gray    rgb(188, 192, 204)  #bcc0cc
+    printf "\e]PF4c4f69" # light_gray    rgb(76, 79, 105)    #4c4f69
     printf "\e]P86c6f85" # gray          rgb(108, 111, 133)  #6c6f85
     printf "\e]P9e64553" # bold_red      rgb(230, 69, 83)    #e64553
     printf "\e]PA40a02b" # bold_green    rgb(64, 160, 43)    #40a02b
