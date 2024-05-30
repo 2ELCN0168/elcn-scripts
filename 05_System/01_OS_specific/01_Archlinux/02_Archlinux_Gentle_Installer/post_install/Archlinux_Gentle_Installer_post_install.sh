@@ -9,6 +9,7 @@ source_files() {
     source $f_path/f_greetings_pi.sh
     source $f_path/f_configs.sh
     source $f_path/f_install_bootloader.sh
+    source $f_path/f_theming.sh
     source $f_path/f_ending.sh
 }
 
@@ -23,6 +24,9 @@ make_config
 
 # INSTALL BOOTLOADER
 install_bootloader
+
+# THEMING
+theming
 
 # ENDING
 ending

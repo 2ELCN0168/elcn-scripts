@@ -2,14 +2,14 @@ ask_packages() {
   
   printf "\n"
   while true; do
-    read -p "[?] - Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, etc.) [Y/n] " netPack
+    read -p "[?] - Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.) [Y/n] " netPack
     local netPack=${netPack:-Y}
     case "$netPack" in
       [yY])
         printf "\n"
         printf "${C_WHITE}> ${INFO} ${C_CYAN}Networking pack${NO_FORMAT} will be installed."
         jump
-        additionalPackages="$additionalPackages nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
+        additionalPackages="$additionalPackages bind-tools ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
         break
         ;;
       [nN])
@@ -113,7 +113,7 @@ pacstrap_install() {
   
   # Perform the installation of the customized system
   pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-  systemctl-tui bind-tools hdparm neovim vim dos2unix tree fastfetch networkmanager tmux ${additionalPackages}
+  systemctl-tui hdparm neovim vim dos2unix tree fastfetch networkmanager tmux ${additionalPackages}
   jump
   printf "${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${C_GREEN}Vim${NO_FORMAT}."
 }

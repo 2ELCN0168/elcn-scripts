@@ -5,7 +5,11 @@ ending() {
   jump
 
   if fastfetch --version &> /dev/null; then
-      fastfetch
+      if [[ $nKorea -eq 1 ]]; then
+        fastfetch --logo redstar
+      else
+        fastfetch
+      fi
   fi
   jump
 
