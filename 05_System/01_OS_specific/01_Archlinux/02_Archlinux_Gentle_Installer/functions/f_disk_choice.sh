@@ -17,8 +17,10 @@ disk_choice() {
   # finalPartRoot="/dev/${diskToUse}${partitionType}2"
 
   while true; do
-    printf "====================\n"
+    printf "==DISK=============="
+    jump
     lsblk -d --output NAME | grep -vE 'NAME|sr0|loop0'
+    printf "\n"
     printf "====================\n"
     read -p "Which block device do you want to use? Type it correctly -> " response
     response=${response:-sda}

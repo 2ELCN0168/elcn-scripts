@@ -11,15 +11,20 @@ set_time() {
   fi
   jump
 
-  if timedatectl set-ntp true &> /dev/null; then
+  printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}"
+  jump
+  if systemctl enable systemd-timesyncd &> /dev/null; then
     printf "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up NTP.${NO_FORMAT}"
   else
     printf "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}"
   fi
   jump
 
+  nKorea=0
+
   while true; do
-    printf "====================\n"
+    printf "==TIME=============="
+    jump
     printf "${C_WHITE}[0] - ${C_CYAN}FRANCE${NO_FORMAT} [default]\n"
     printf "${C_WHITE}[1] - ${C_WHITE}ENGLAND${NO_FORMAT} \n"
     printf "${C_WHITE}[2] - ${C_WHITE}US (New-York)${NO_FORMAT} \n"
@@ -27,7 +32,8 @@ set_time() {
     printf "${C_WHITE}[4] - ${C_CYAN}South Korea (Seoul)${NO_FORMAT} \n"
     printf "${C_WHITE}[5] - ${C_RED}Russia (Moscow)${NO_FORMAT} \n"
     printf "${C_WHITE}[6] - ${C_RED}China (CST - Shanghai)${NO_FORMAT} \n"
-    printf "${C_WHITE}[7] - ${C_RED}North Korea (Pyongyang)${NO_FORMAT} \n"
+    printf "${C_WHITE}[7] - ${C_RED}North Korea (Pyongyang)${NO_FORMAT} "
+    jump
     printf "====================\n"
     read -p "[?] - Where do you live? " localtime
     local localtime=${localtime:-0}
@@ -63,6 +69,7 @@ set_time() {
         ;;
       [7])
         ln -sf /usr/share/zoneinfo/Asia/Pyongyang /etc/localtime
+        nKorea=1
         break
         ;;
       *)
@@ -117,11 +124,6 @@ set_hosts() {
   cat /etc/hosts
   sleep 1
   jump
-
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Changing DNS to ${C_PINK}1.1.1.1 and 9.9.9.9${NO_FORMAT}"
-  echo "nameserver 1.1.1.1" > /etc/resolv.conf
-  echo "nameserver 9.9.9.9" >> /etc/resolv.conf
-  jump
 }
 
 set_vconsole() {
@@ -129,8 +131,45 @@ set_vconsole() {
   # Creating /mnt/etc/vconsole.conf
     printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating the file ${C_PINK}/etc/vconsole.conf${NO_FORMAT}."
     jump
-    printf "KEYMAP=us" > /etc/vconsole.conf
-    printf "FONT=ter-116b" >> /etc/vconsole.conf
+    local keymap=""
+    while true; do
+      printf "==KEYMAP============"
+      jump
+      printf "${C_WHITE}[0] - ${C_WHITE}US INTL. - QWERTY${NO_FORMAT} [default]\n"
+      printf "${C_WHITE}[1] - ${C_WHITE}US - QWERTY${NO_FORMAT} \n"
+      printf "${C_WHITE}[2] - ${C_WHITE}FR - AZERTY${NO_FORMAT}"
+      jump
+      printf "====================\n"
+      read -p "[?] - Select your keymap " response
+      local response=${response:-0}
+      case "$response" in
+        [0])
+          printf "\n"
+          keymap="us-acentos"
+          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+          break
+          ;;
+        [1])
+          printf "\n"
+          keymap="us"
+          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+          break
+          ;;
+        [2])
+          printf "\n"
+          keymap="fr"
+          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+          break
+          ;;
+        *)
+          invalid_answer
+          ;;
+      esac
+    done
+
+    jump
+    echo "KEYMAP=${keymap}" > /etc/vconsole.conf
+    echo "FONT=ter-116b" >> /etc/vconsole.conf
 }
 
 set_pacman() {
@@ -141,6 +180,10 @@ set_pacman() {
 
   #sed -i '/^\s*#\(Color\|ParallelDownloads\)/ s/^#//' /etc/pacman.conf
   sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
+
+  if tldr -v &> /dev/null; then
+    tldr --update &> /dev/null
+  fi
 }
 
 set_mkinitcpio() {
@@ -190,29 +233,37 @@ set_root_passwd() {
   jump
 }
 
-create_tty_theme() {
+create_themes() {
+
+  mkdir -p /boot/EFI/refind/themes
+  git clone https://github.com/catppuccin/refind /boot/EFI/refind/themes/catppuccin &> /dev/null
 
   local choice=0
 
   while true; do
-    printf "====================\n"
+    printf "==THEMES============"
+    jump
     printf "${C_WHITE}[0] - ${C_WHITE}Catppuccin latte (light)${NO_FORMAT}\n"
     printf "${C_WHITE}[1] - ${C_CYAN}Catppuccin mocha (dark)${NO_FORMAT} [default] \n"
-    printf "${C_WHITE}[2] - ${NO_FORMAT}Keep default TTY colors \n"
+    printf "${C_WHITE}[2] - ${NO_FORMAT}Keep default TTY colors"
+    jump
     printf "====================\n"
     
     read -p "[?] - Which theme do you prefer for your TTY? " response
     local response=${response:-1}
     case "$response" in
       [0])
+        echo include themes/catppuccin/latte.conf >> /boot/EFI/refind/refind.conf
         choice=0
         break
         ;;
       [1])
+        echo include themes/catppuccin/mocha.conf >> /boot/EFI/refind/refind.conf
         choice=1
         break
         ;;
       [2])
+        rm -rf /boot/EFI/refind/themes/catppuccin &> /dev/null
         choice=2
         break
         ;;
@@ -226,6 +277,7 @@ create_tty_theme() {
 
   if [[ $choice -eq 0 ]]; then
     echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.bashrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.zshrc
     cat << EOF > /etc/tty_themes.d/tty_catppuccin_latte.sh
     __tty_theme() {
     [ "\$TERM" = 'linux' ] || return # Only run in a TTY
@@ -254,6 +306,7 @@ create_tty_theme() {
 EOF
   elif [[ $choice -eq 1 ]]; then
     echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.bashrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.zshrc
     cat << EOF > /etc/tty_themes.d/tty_catppuccin_mocha.sh
     __tty_theme() {
     [ "\$TERM" = 'linux' ] || return # Only run in a TTY
@@ -284,6 +337,8 @@ EOF
     continue
   fi
 
+  
+
 }
 
 set_bashrc() {
@@ -294,7 +349,12 @@ set_bashrc() {
   echo "alias ip='command ip -color=auto'" >> /etc/skel/.bashrc
   echo "alias grep='grep --color=auto'" >> /etc/skel/.bashrc
 
+  if [[ $nKorea -eq 1 ]]; then
+    echo "alias fastfetch='fastfetch --logo redstaros'" >> /etc/skel/.bashrc
+  fi
+
   cp /etc/skel/.bashrc /root
+
 }
 
 set_zshrc() {
@@ -322,6 +382,11 @@ set_zshrc() {
   echo "alias ls='command ls --color=auto'" >> /etc/skel/.zshrc
   echo "alias ip='command ip -color=auto'" >> /etc/skel/.zshrc
   echo "alias grep='grep --color=auto'" >> /etc/skel/.zshrc
+  if [[ $nKorea -eq 1 ]]; then
+    echo "alias fastfetch='fastfetch --logo redstaros'" >> /etc/skel/.zshrc
+  fi
+
+  cp /etc/skel/.zshrc /root
 }
 
 set_vim_nvim() {
@@ -330,7 +395,7 @@ set_vim_nvim() {
   set number
   set relative number
 EOF
-
+  mkdir -p /etc/skel/.config/nvim
   cat << EOF > /etc/skel/.config/nvim/init.vim
   set number
   set relative number
@@ -341,7 +406,7 @@ EOF
 
 create_user() {
 
-  local username=""
+  username=""
   local sudo="-G wheel "
   
   while [[ -z "$username" ]]; do
@@ -392,11 +457,12 @@ ask_newuser() {
 
   while true; do
     printf "\n"
-    read -p "[?] - Would you like to create a user? [N/y] " response
-    local response=${response:-N}
-    case "$response" in
+    read -p "[?] - Would you like to create a user? [N/y] " createUser
+    createUser=${createUser:-N}
+    case "$createUser" in
       [yY])
         create_user
+        createUser="Y"
         break
         ;;
       [nN])
@@ -419,10 +485,10 @@ make_config() {
 
   jump
 
-  printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-resolved.${NO_FORMAT}"
-  systemctl enable systemd-resolved &> /dev/null
+
 
   set_time
+  systemd_resolved
   locales_gen
   set_hostname
   set_hosts
@@ -430,7 +496,7 @@ make_config() {
   set_pacman
   set_mkinitcpio
   set_root_passwd
-  create_tty_theme
+  create_themes
   set_bashrc
   set_zshrc
   set_vim_nvim

@@ -22,6 +22,7 @@ source_files() {
     source $f_path/f_format_choice.sh
     source $f_path/f_pacstrap.sh
     source $f_path/f_genfstab.sh
+    source $f_path/f_systemd_resolved.sh
 }
 
 # SOURCE FILES
@@ -65,6 +66,9 @@ pacstrap_install
 
 # GENERATE FSTAB
 gen_fstab
+
+# CONFIGURE SYSTEMD-RESOLVED
+systemd_resolved
 
 cp -a c_config.sh post_install
 cp -a functions/f_formatting.sh post_install/functions

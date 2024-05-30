@@ -1,16 +1,25 @@
 paru() {
 
   while true; do
-    read -p "[?] - Would you like to install paru? It's an AUR helper like yay. [y/N] " response
+
+    local testMem=$(free -m | head -2 | tail -1 | awk '{print $2}')
+
+    if [[ $testMem -lt 7000 ]]; then
+      break
+    fi
+    printf "[?] - Would you like to install paru? It's an AUR helper like yay. [y/N]\n"
+    read -p "[?] - Warning, this can take some time... " response
     local response=${response:-N}
+    if [[ ! $createUser == 'Y' ]]; then
+      break
+    fi
     case "$response" in 
       [yY])
         printf "${C_WHITE}> ${INFO} ${C_WHITE}Installing ${C_CYAN}paru${NO_FORMAT}..."
         su $username
-        cd 
-        git clone https://aur.archlinux.org/paru.git
-        cd paru
-        makepkg -si && cd ..
+        git clone https://aur.archlinux.org/paru.git /home/$username/paru
+        cd /home/$username/paru
+        makepkg -si
         exit
         mv /home/$username/paru /usr/src
 

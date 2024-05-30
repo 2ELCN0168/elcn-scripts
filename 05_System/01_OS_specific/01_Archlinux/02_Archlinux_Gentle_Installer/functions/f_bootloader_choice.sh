@@ -12,10 +12,12 @@
   
   if [[ UEFI -eq 1 ]]; then
     while true; do
-      printf "====================\n"
+      printf "==BOOTLOADER========"
+      jump
       printf "${C_WHITE}[0] - ${C_CYAN}rEFInd${NO_FORMAT} (default) \n"
       printf "${C_WHITE}[1] - ${C_YELLOW}GRUB2${NO_FORMAT} \n"
-      printf "${C_WHITE}[2] - ${C_RED}systemd-boot${NO_FORMAT} \n"
+      printf "${C_WHITE}[2] - ${C_RED}systemd-boot${NO_FORMAT} "
+      jump
       printf "====================\n"
       
       read -p "Which one do you prefer? [0/1/2] -> " response

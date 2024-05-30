@@ -1,6 +1,6 @@
 install_refind() {
 
-  printf "${C_WHITE}> ${INFO}Installing rEFInd.${NO_FORMAT}"
+  printf "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
   jump
   refind-install &> /dev/null
 
@@ -35,7 +35,7 @@ install_refind() {
 
   echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
 
-  printf "${C_WHITE}> ${SUC} ${C_WHITE}rEFInd configuration created successfully.${NO_FORMAT}"
+  printf "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}"
   jump
 }
 
