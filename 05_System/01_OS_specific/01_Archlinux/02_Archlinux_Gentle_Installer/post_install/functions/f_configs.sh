@@ -1,6 +1,5 @@
 set_time() {
 
-  jump
   printf "${C_WHITE}> ${INFO} Setting system clock to UTC."
   jump
 

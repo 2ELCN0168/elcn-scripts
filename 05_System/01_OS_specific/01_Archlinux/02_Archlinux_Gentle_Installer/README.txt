@@ -1,7 +1,8 @@
 # TODO
 
 [X] - Generate zshrc
-[ ] - Ask for additionnal packages
-[ ] - nftables + sshguard
-[ ] - pacman hooks
-[ ] - 
+[X] - Ask for additionnal packages
+[X] - nftables + sshguard
+[X] - pacman hooks
+[ ] - motd et issue.net
+[ ] - Conditions LVM

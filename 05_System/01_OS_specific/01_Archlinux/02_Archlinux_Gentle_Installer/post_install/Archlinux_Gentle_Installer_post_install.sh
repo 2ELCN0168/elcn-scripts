@@ -10,6 +10,8 @@ source_files() {
     source $f_path/f_configs.sh
     source $f_path/f_install_bootloader.sh
     source $f_path/f_theming.sh
+    source $f_path/f_pacman_hooks.sh
+    source $f_path/f_install_frw.sh
     source $f_path/f_ending.sh
 }
 
@@ -25,8 +27,14 @@ make_config
 # INSTALL BOOTLOADER
 install_bootloader
 
+# PACMAN HOOKS CREATION
+create_pacman_hooks
+
+# INSTALL FIREWALL + SSHGUARD
+install_frw
+
 # THEMING
-theming
+create_themes
 
 # ENDING
 ending
