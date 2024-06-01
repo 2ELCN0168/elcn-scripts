@@ -41,8 +41,8 @@ create_themes() {
   mkdir /etc/tty_themes.d
 
   if [[ $choice -eq 0 ]]; then
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.bashrc
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.zshrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.bashrc >> /root/.bashrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.zshrc >> /root/.bashrc
     cat << EOF > /etc/tty_themes.d/tty_catppuccin_latte.sh
     __tty_theme() {
     [ "\$TERM" = 'linux' ] || return # Only run in a TTY
@@ -70,8 +70,8 @@ create_themes() {
   __tty_theme
 EOF
   elif [[ $choice -eq 1 ]]; then
-    echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.bashrc
-    echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.zshrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.bashrc >> /root/.bashrc
+    echo "source /etc/tty_themes.d/tty_catppuccin_mocha.sh" >> /etc/skel/.zshrc >> /root/.bashrc
     cat << EOF > /etc/tty_themes.d/tty_catppuccin_mocha.sh
     __tty_theme() {
     [ "\$TERM" = 'linux' ] || return # Only run in a TTY

@@ -1,10 +1,10 @@
-paru() {
+install_paru() {
 
   while true; do
 
     local testMem=$(free -m | head -2 | tail -1 | awk '{print $2}')
 
-    if [[ $testMem -lt 7000 ]]; then
+    if [[ $testMem -gt 7000 ]]; then
       break
     fi
     printf "[?] - Would you like to install paru? It's an AUR helper like yay. [y/N]\n"
@@ -28,7 +28,7 @@ paru() {
         else
           printf "${C_WHITE}> ${ERR} ${C_WHITE}Cannot install ${C_CYAN}paru${NO_FORMAT}."
         fi
-
+        ;;
       [nN])
         break
         ;;

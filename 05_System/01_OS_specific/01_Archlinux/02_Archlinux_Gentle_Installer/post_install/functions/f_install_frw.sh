@@ -5,8 +5,10 @@ install_frw() {
   jump
 
   if ! pacman -S nftables --noconfirm; then
+    printf "\n"
     printf "${C_WHITE}> ${ERR} Cannot install ${C_WHITE}nftables.${NO_FORMAT}"
   else
+    printf "\n"
     printf "${C_WHITE}> ${SUC} Installed ${C_WHITE}nftables.${NO_FORMAT}"
     jump
     printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} nftables.${NO_FORMAT}"
@@ -19,8 +21,10 @@ install_frw() {
   jump
   
   if ! pacman -S nftables --noconfirm; then
+    printf "\n"
     printf "${C_WHITE}> ${ERR} Cannot install ${C_WHITE}sshguard.${NO_FORMAT}"
   else
+    printf "\n"
     printf "${C_WHITE}> ${SUC} Installed ${C_WHITE}sshguard.${NO_FORMAT}"
     jump
     printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sshguard.${NO_FORMAT}"

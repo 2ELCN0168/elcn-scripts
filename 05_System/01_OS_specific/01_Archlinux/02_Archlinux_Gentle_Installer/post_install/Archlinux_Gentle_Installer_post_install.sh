@@ -12,6 +12,7 @@ source_files() {
     source $f_path/f_theming.sh
     source $f_path/f_pacman_hooks.sh
     source $f_path/f_install_frw.sh
+    source $f_path/f_paru.sh
     source $f_path/f_ending.sh
 }
 
@@ -35,6 +36,9 @@ install_frw
 
 # THEMING
 create_themes
+
+# INSTALL PARU
+install_paru
 
 # ENDING
 ending
