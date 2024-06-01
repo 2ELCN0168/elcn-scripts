@@ -31,4 +31,6 @@ greetings() {
 
   # This unmounting action ensure to have nothing actually mounted on /mnt before starting
   umount -R /mnt &> /dev/null
+
+  echo "Warning, LVM and systemd-boot not working yet. Don't use them.\n"
 }
