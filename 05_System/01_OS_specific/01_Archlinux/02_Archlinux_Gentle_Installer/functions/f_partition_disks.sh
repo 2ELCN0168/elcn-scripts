@@ -12,8 +12,10 @@ partition_disk() {
     printf "${C_WHITE}> ${INFO} Creating two partitions for ${C_CYAN}GPT${NO_FORMAT} disk."
     jump
 
-    if parted -s $user_disk mklabel gpt && \
-       parted -s $user_disk mkpart ESP fat32 1Mib 512Mib && \
+    # PROBLEME HERE, NEED TO REMOVE THE IF TO GET IT WORKING
+    if parted -s $user_disk mklabel gpt; then
+       #parted -s $user_disk mkpart ESP fat32 1Mib 512Mib && \
+       sgdisk -n 1::+512M -t 1:ef00 $user_disk
        parted -s $user_disk mkpart Archlinux 512Mib 100%; then
       printf "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}"
       jump

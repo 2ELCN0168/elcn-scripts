@@ -156,11 +156,13 @@ install_systemdboot() {
   printf "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}"
   jump
   
-  if bootctl install &> /dev/null; then
+  if bootctl install --esp-path=/boot &> /dev/null; then
     echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
     echo -e "linux   /vmlinuz-linux" >> /boot/loader/entries/arch.conf
     echo -e "initrd  /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-    echo -e "initrd  /$isMicrocode" >> /boot/loader/entries/arch.conf
+    if [[ -z $isMicrocode ]];then
+      echo -e "initrd  /$isMicrocode" >> /boot/loader/entries/arch.conf
+    fi
     echo -e "options $rootLine$isEncrypt$uuid$isEncryptEnding rw $isBTRFS" >> /boot/loader/entries/arch.conf
 
     printf "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}"
