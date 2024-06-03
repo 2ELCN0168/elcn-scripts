@@ -28,7 +28,7 @@ install_refind() {
     isBTRFS=" rootflags=subvol=@"
   fi
 
-  uuid=$(blkid -o value -s UUID "$root_part")
+  local uuid=$(blkid -o value -s UUID "$root_part")
 
   # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
   echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
@@ -113,7 +113,7 @@ install_grub() {
   fi
 
   # uuid=$(blkid -o value -s UUID "$partition")
-  uuid=$(blkid -o value -s UUID $root_part)
+  local uuid=$(blkid -o value -s UUID $root_part)
 
   grubKernelParameters="\"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\""
   printf "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
@@ -126,10 +126,43 @@ install_grub() {
 
 install_systemdboot() {
 
+  local rootLine=""
+  local isMicrocode=""
+  local isBTRFS=""
+  local isEncrypt=""
+  local isEncryptEnding=""
+
+  if [[ $cpuBrand == 'INTEL' ]]; then
+    isMicrocode="initrd=intel-ucode.img"
+  elif [[ $cpuBrand == 'AMD' ]]; then
+    isMicrocode="initrd=amd-ucode.img"
+  fi
+
+  if [[ $wantEncrypted -eq 1 ]]; then
+    rootLine=""
+    isEncrypt="rd.luks.name="
+    isEncryptEnding="=root root=/dev/mapper/root"
+  elif [[ $wantEncrypted -eq 0 ]]; then
+    rootLine="root=UUID="
+  fi
+
+  if [[ $filesystem == 'BTRFS' && $btrfsSubvols -eq 1 ]]; then
+    isBTRFS=" rootflags=subvol=@"
+  fi
+
+  local uuid=$(blkid -o value -s UUID "$root_part")
+
+
   printf "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}"
   jump
   
   if bootctl install &> /dev/null; then
+    echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
+    echo -e "linux   /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+    echo -e "initrd  /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+    echo -e "initrd  /$isMicrocode" >> /boot/loader/entries/arch.conf
+    echo -e "options $rootLine$isEncrypt$uuid$isEncryptEnding rw $isBTRFS" >> /boot/loader/entries/arch.conf
+
     printf "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}"
     jump
     if ! ls /etc/pacman.d/hooks; then

@@ -116,8 +116,10 @@ EOF
 
 create_pacman_hooks() {
 
-  mkdir /etc/pacman.d/hooks &> /dev/null
-
+  if ! ls /etc/pacman.d/hooks; then
+    mkdir /etc/pacman.d/hooks &> /dev/null
+  fi
+  
   refind_hook
   bash_zsh_hook
   pacman_hook
