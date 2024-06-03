@@ -66,6 +66,6 @@ lvm_handling() {
     jump
     mount --mkdir ${boot_part} /mnt/boot
 
-    root_part="root_part="/dev/mapper/VG_Archlinux-root"
+    #root_part="root_part="/dev/mapper/VG_Archlinux-root"
   fi
 }
