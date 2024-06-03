@@ -65,5 +65,7 @@ lvm_handling() {
     printf "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${boot_part}${NO_FORMAT} to /mnt/boot"
     jump
     mount --mkdir ${boot_part} /mnt/boot
+
+    root_part="root_part="/dev/mapper/VG_Archlinux-root"
   fi
 }
