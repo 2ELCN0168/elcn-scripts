@@ -232,54 +232,6 @@ set_root_passwd() {
   jump
 }
 
-set_bashrc() {
-
-  echo "PS1='\[\e[93m\][\[\e[97;1m\]\u\[\e[0;93m\]@\[\e[97m\]\h\[\e[93m\]]\[\e[91m\][\w]\[\e[93m\](\t)\[\e[0m\] \[\e[97m\]\$\[\e[0m\] '" >> /etc/skel/.bashrc
-  echo "alias ll='command ls -lh --color=auto'" >> /etc/skel/.bashrc
-  echo "alias ls='command ls --color=auto'" >> /etc/skel/.bashrc
-  echo "alias ip='command ip -color=auto'" >> /etc/skel/.bashrc
-  echo "alias grep='grep --color=auto'" >> /etc/skel/.bashrc
-
-  if [[ $nKorea -eq 1 ]]; then
-    echo "alias fastfetch='fastfetch --logo redstaros'" >> /etc/skel/.bashrc
-  fi
-
-  cp /etc/skel/.bashrc /root
-
-}
-
-set_zshrc() {
-
-  echo "# Lines configured by zsh-newuser-install" > /etc/skel/.zshrc
-  echo "HISTFILE=~/.histfile" >> /etc/skel/.zshrc
-  echo "HISTSIZE=1000" >> /etc/skel/.zshrc
-  echo "SAVEHIST=1000" >> /etc/skel/.zshrc
-  echo "bindkey -e" >> /etc/skel/.zshrc
-  echo "# End of lines configured by zsh-newuser-install" >> /etc/skel/.zshrc
-  
-  echo "" >> /etc/skel/.zshrc
-  echo "# PLUGINS #" >> /etc/skel/.zshrc
-  echo "" >> /etc/skel/.zshrc
-  
-  echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> /etc/skel/.zshrc
-  echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> /etc/skel/.zshrc
-  echo 'PROMPT="%F{red}[%f%B%F{white}%n%f%b%F{red}@%f%F{white}%m%f%F{red}:%f%B%~%b%F{red}]%f(%F{red}%*%f)%F{red}%#%f "' >> /etc/skel/.zshrc
-  
-  echo "" >> /etc/skel/.zshrc
-  echo "# ALIASES #" >> /etc/skel/.zshrc
-  echo "" >> /etc/skel/.zshrc
-
-  echo "alias ll='command ls -lh --color=auto'" >> /etc/skel/.zshrc
-  echo "alias ls='command ls --color=auto'" >> /etc/skel/.zshrc
-  echo "alias ip='command ip -color=auto'" >> /etc/skel/.zshrc
-  echo "alias grep='grep --color=auto'" >> /etc/skel/.zshrc
-  if [[ $nKorea -eq 1 ]]; then
-    echo "alias fastfetch='fastfetch --logo redstaros'" >> /etc/skel/.zshrc
-  fi
-
-  cp /etc/skel/.zshrc /root
-}
-
 set_vim_nvim() {
 
   cat << EOF > /etc/skel/.vimrc
@@ -301,88 +253,12 @@ EOF
 
 }
 
-create_user() {
-
-  username=""
-  local sudo="-G wheel "
-  
-  while [[ -z "$username" ]]; do
-    read -p "[?] - What will be the name of the new user? " response
-    username="$response"
-  done
-  jump
-
-  while true; do
-    read -p "[?] - Will this user be sudo? [Y/n]" sudoResponse
-    local sudoResponse=${sudoResponse:-Y}
-    case "$sudoResponse" in
-      [yY])
-        sudo=""
-        break
-        ;;
-      [nN])
-        sudo="-G wheel "
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
-
-  printf "\n"
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_WHITE}${username}${NO_FORMAT}."
-  jump
-
-  if useradd -m -U ${sudo}-s /bin/zsh ${username} &> /dev/null; then
-    printf "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_WHITE}${username}${NO_FORMAT} created."
-    jump
-    passwd $username
-    printf "\n"
-  else
-    printf "${C_WHITE}> ${ERR} ${NO_FORMAT}New user ${C_WHITE}${username}${NO_FORMAT} cannot be created."
-    jump
-  fi
-
-  if [[ -z $sudo ]]; then
-    echo "${username} ALL=(ALL:ALL) ALL" > /etc/sudoers.d/$username.sudo
-  fi
-
-}
-
-ask_newuser() {
-
-  while true; do
-    printf "\n"
-    read -p "[?] - Would you like to create a user? [N/y] " createUser
-    createUser=${createUser:-N}
-    case "$createUser" in
-      [yY])
-        create_user
-        createUser="Y"
-        break
-        ;;
-      [nN])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${NO_FORMAT}No user will be created."
-        jump
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
-}
-
 make_config() {
 
   printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}"
   systemctl enable NetworkManager &> /dev/null
 
   jump
-
-
 
   set_time
   locales_gen
@@ -392,8 +268,5 @@ make_config() {
   set_pacman
   set_mkinitcpio
   set_root_passwd
-  set_bashrc
-  set_zshrc
   set_vim_nvim
-  ask_newuser
 }

@@ -67,9 +67,6 @@ pacstrap_install
 # GENERATE FSTAB
 gen_fstab
 
-# CONFIGURE SYSTEMD-RESOLVED
-systemd_resolved
-
 cp -a c_config.sh post_install
 cp -a functions/f_formatting.sh post_install/functions
 cp -a post_install /mnt
