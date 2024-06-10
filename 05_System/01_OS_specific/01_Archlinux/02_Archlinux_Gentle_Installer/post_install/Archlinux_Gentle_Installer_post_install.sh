@@ -39,7 +39,7 @@ create_themes
 
 # INSTALL PARU
 install_paru
-
+systemctl enable systemd-resolved &> /dev/null
 # ENDING
 ending
 
