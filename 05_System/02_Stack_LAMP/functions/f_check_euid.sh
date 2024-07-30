@@ -6,4 +6,6 @@ check_euid() {
         else
                 echo -e "${C_GREEN}USER IS ROOT. CONTINUING.${NO_FORMAT}"
         fi
+
+        echo
 }

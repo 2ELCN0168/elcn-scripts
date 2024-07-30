@@ -1,5 +1,7 @@
 check_installations() {
 
+        echo
+
         if [[ $OS_TYPE == 'ARCHLINUX' ]]; then
                 if httpd -v &> /dev/null; then
                         echo -e "${C_GREEN}Apache is installed.${NO_FORMAT}"
