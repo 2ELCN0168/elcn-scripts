@@ -13,6 +13,7 @@ source_files() {
         source ${f_path}/f_install_mariadb.sh
         source ${f_path}/f_install_php.sh
         source ${f_path}/f_secure_mariadb.sh
+        source ${f_path}/f_ending.sh
 }
 
 source_files
@@ -34,3 +35,6 @@ install_php
 
 # SECURE MARIADB
 secure_mariadb
+
+# ENDING
+ending
