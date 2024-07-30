@@ -9,6 +9,10 @@ source_files() {
 
         source ${f_path}/f_starting.sh
         source ${f_path}/f_pmanager_detector.sh
+        source ${f_path}/f_install_apache.sh
+        source ${f_path}/f_install_mariadb.sh
+        source ${f_path}/f_install_php.sh
+        source ${f_path}/f_secure_mariadb.sh
 }
 
 source_files
@@ -18,3 +22,15 @@ starting
 
 # DETECT PACKAGE MANAGER
 pmanager_detector
+
+# INSTALL APACHE
+install_apache
+
+# INSTALL MARIADB
+install_mariadb
+
+# INSTALL PHP + MODULES
+install_php
+
+# SECURE MARIADB
+secure_mariadb
