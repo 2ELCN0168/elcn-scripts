@@ -1,5 +1,8 @@
 secure_mariadb() {
 
+        clear
+        echo
+
         if [[ $OS_TYPE == 'ARCHLINUX' ]]; then
                 echo -e "> ${B_CYAN} Launching mariadb-secure-installation. ${NO_FORMAT}\n"
                 mariadb-secure-installation 
