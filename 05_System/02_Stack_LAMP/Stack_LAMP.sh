@@ -8,6 +8,7 @@ source_files() {
         source ./config/c_formatting.sh
 
         source ${f_path}/f_starting.sh
+        source ${f_path}/f_check_euid.sh
         source ${f_path}/f_pmanager_detector.sh
         source ${f_path}/f_install_apache.sh
         source ${f_path}/f_install_mariadb.sh
@@ -16,25 +17,32 @@ source_files() {
         source ${f_path}/f_ending.sh
 }
 
-source_files
+__main() {
+        source_files
 
-# BEGINNING
-starting
+        # BEGINNING
+        starting
 
-# DETECT PACKAGE MANAGER
-pmanager_detector
+        # VERIFY IF USER IS ROOT
+        check_euid
 
-# INSTALL APACHE
-install_apache
+        # DETECT PACKAGE MANAGER
+        pmanager_detector
 
-# INSTALL MARIADB
-install_mariadb
+        # INSTALL APACHE
+        install_apache
 
-# INSTALL PHP + MODULES
-install_php
+        # INSTALL MARIADB
+        install_mariadb
 
-# SECURE MARIADB
-secure_mariadb
+        # INSTALL PHP + MODULES
+        install_php
 
-# ENDING
-ending
+        # SECURE MARIADB
+        secure_mariadb
+
+        # ENDING<S-D-S>
+        ending
+}
+
+__main
