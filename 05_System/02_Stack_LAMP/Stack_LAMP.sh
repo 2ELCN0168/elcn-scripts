@@ -11,6 +11,8 @@ source_files() {
         source ${f_path}/f_pmanager_detector.sh
 }
 
+source_files
+
 # BEGINNING
 starting
 
