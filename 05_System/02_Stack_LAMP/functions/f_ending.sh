@@ -6,5 +6,5 @@ ending() {
         echo -e " If you want to see more of my work, check my ${C_RED}github${NO_FORMAT} account at:"
         echo -e " ${C_CYAN}https://github.com/2ELCN0168${NO_FORMAT}"
         echo -e "==================================================================================="
-        echo "\n\n"
+        echo -e "\n\n"
 }

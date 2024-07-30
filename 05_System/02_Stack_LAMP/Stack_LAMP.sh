@@ -14,6 +14,7 @@ source_files() {
         source ${f_path}/f_install_mariadb.sh
         source ${f_path}/f_install_php.sh
         source ${f_path}/f_secure_mariadb.sh
+        source ${f_path}/f_check_installations.sh
         source ${f_path}/f_ending.sh
 }
 
@@ -41,7 +42,10 @@ __main() {
         # SECURE MARIADB
         secure_mariadb
 
-        # ENDING<S-D-S>
+        # CHECK INSTALLATIONS
+        check_installations
+
+        # ENDING
         ending
 }
 
