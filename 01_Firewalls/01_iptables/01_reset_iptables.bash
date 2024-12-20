@@ -4,8 +4,8 @@
 
 # Color variables beginnings
 
-C_RED="\033[31"
-C_GREEN="\033[32"
+C_RED="\033[31m"
+C_GREEN="\033[32m"
 C_CYAN="\033[36m"
 C_YELLOW="\033[33m"
 
@@ -17,7 +17,7 @@ NO_FORMAT="\033[0m"
 
 check_iptables() {
 	echo -e "> Checking if IPtables is installed... <"
-	if ! iptables --version 1>/dev/null; then
+	if ! iptables --version 1> "/dev/null"; then
 		echo -e "\033[1;31m/!\\ IPtables is not installed! Aborting. /!\\ ${NO_FORMAT}"
 	else
 		echo -e "\033[1;36m- IPtables is installed...${NO_FORMAT}"
